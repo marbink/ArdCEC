@@ -20,7 +20,12 @@ Tested with Arduino Uno and Samsung FX2490HD.
 
 ## Schematic
 3.3V, 5V, CEC_IN, CEC_OUT and GND are connected to Arduino's pins.
+
 CEC_LINE and CEC_GND are connected rispectively to pins 13 and 17.
+
+Someone got it working replacing BC547B with 2N3904. It will **not** work if you replace them with 2N2222.
+
+For HDMI connectors, someone cutted a cable. I preferred to buy a female-female adapter for some euros.
 
 ![Schematic](extras/schematic.png)
 
