@@ -22,7 +22,7 @@ Tested with Arduino Uno and Samsung FX2490HD.
 3.3V, 5V, CEC_IN, CEC_OUT and GND are connected to Arduino's pins.
 CEC_LINE and CEC_GND are connected rispectively to pins 13 and 17.
 
-![Schematic](https://raw.githubusercontent.com/marbink/ArdCEC/master/extras/schematic.png)
+![Schematic](extras/schematic.png)
 
 ## Credits and Sources
 - floe (https://github.com/floe/CEC/)
