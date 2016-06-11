@@ -6,7 +6,7 @@ Tested with Arduino Uno and Samsung FX2490HD.
 
 ## Improvements, Fixes and Changes
 
-- Implemented source parameters on many transmitting function (all "report" functions)
+- Implemented source parameter on many transmitting functions (all "report" functions)
 - Implemented Menu Request { 0x8D; 0x02 }
 - Implemented Menu Activated { 0x8E, 0x00 }
 - Implemented Power State handler to prevent problems with other devices using CEC.
@@ -15,7 +15,7 @@ Tested with Arduino Uno and Samsung FX2490HD.
 ## Todo
 
 - Fix OSDName. [*Actually it transmits SD:01:48:54:50:43 (S = Source, D = Destination), the problem is the opcode (0x01). It should be 0x47*]
-- Implement USB-Hid to connect Arduino via USB to HTPC. It would be wonderful if it would be recognized as a standard MCE Remote Controller. No software on HTPC would be required and high compatibility.
+- Implement USB-Hid to connect Arduino via USB to HTPC. It would be wonderful if it would be recognized as a standard MCE Remote Controller. No software on HTPC would be required. high compatibility. **Or** create a plugin for Kodi, it should be easier and it should require less time.
 - Implement something to pass data to Arduino from PC to set some variables. (Ex: OSDName)
 
 ## Schematic
