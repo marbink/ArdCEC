@@ -23,7 +23,7 @@ class MyCEC: public CEC_Device {
     void reportPowerState(int source = 0x00)  { /*unsigned char frame[2] = { 0x90, 0x00 };  */       TransmitFrame(source,powerstate,sizeof(powerstate)); } // report power state (on)
     void reportCECVersion(int source = 0x00)  { unsigned char frame[2] = { 0x9E, 0x04 };             TransmitFrame(source,frame,sizeof(frame)); } // report CEC version (v1.3a)
 
-    //TODO: Fix OSDName, it doens't work with CDT_RECORDING_DEVICE (at line 108). Seems to work correctly with 
+    //TODO: Fix OSDName, it doens't work with CDT_RECORDING_DEVICE (at line 108).
     void reportOSDName(int source = 0x00)     { unsigned char frame[5] = { 0x47, 'H','T','P','C' };  TransmitFrame(source,frame,sizeof(frame)); } // FIXME: name hardcoded
     void reportVendorID(int source = 0x00)    { unsigned char frame[4] = { 0x87, 0x00, 0xF1, 0x0E }; TransmitFrame(source,frame,sizeof(frame)); } // report fake vendor ID
 
@@ -55,7 +55,7 @@ class MyCEC: public CEC_Device {
         
     void OnReceive(int source, int dest, unsigned char* buffer, int count) {
       if (count == 0) return;
-      //Controllare se è monitor altrimetni intercettare solo i propri.
+      
       CEC_Device::OnReceive(source,dest,buffer,count);
       switch (buffer[0]) {
         
