@@ -1,3 +1,4 @@
+
 #include "CEC_Device.h"
 
 #define IN_LINE 2
@@ -23,24 +24,14 @@ class MyCEC: public CEC_Device {
     void reportPowerState(int source = 0x00)  { /*unsigned char frame[2] = { 0x90, 0x00 };  */       TransmitFrame(source,powerstate,sizeof(powerstate)); } // report power state (on)
     void reportCECVersion(int source = 0x00)  { unsigned char frame[2] = { 0x9E, 0x04 };             TransmitFrame(source,frame,sizeof(frame)); } // report CEC version (v1.3a)
 
-    //TODO: Fix OSDName, it doens't work with CDT_RECORDING_DEVICE (at line 108).
+    //TODO: Fix OSDName, sometimes it doens't work...
     void reportOSDName(int source = 0x00)     { unsigned char frame[5] = { 0x47, 'H','T','P','C' };  TransmitFrame(source,frame,sizeof(frame)); } // FIXME: name hardcoded
     void reportVendorID(int source = 0x00)    { unsigned char frame[4] = { 0x87, 0x00, 0xF1, 0x0E }; TransmitFrame(source,frame,sizeof(frame)); } // report fake vendor ID
 
     void reportMenuActivated(int source = 0x00) { unsigned char frame[2] = { 0x8E, 0x00 }; TransmitFrame(source,frame,sizeof(frame)); } // report fake vendor ID
     
-    void handleKey(unsigned char key) {
- /*     switch (key) {
-        case 0x00: Keyboard.press(KEY_RETURN); break;
-        case 0x01: Keyboard.press(KEY_UP_ARROW); break;
-        case 0x02: Keyboard.press(KEY_DOWN_ARROW); break;
-        case 0x03: Keyboard.press(KEY_LEFT_ARROW); break;
-        case 0x04: Keyboard.press(KEY_RIGHT_ARROW); break;
-        case 0x0D: Keyboard.press(KEY_ESC); break;
-        case 0x4B: Keyboard.press(KEY_PAGE_DOWN); break;
-        case 0x4C: Keyboard.press(KEY_PAGE_UP); break;
-        case 0x53: Keyboard.press(KEY_HOME); break;
-     }*/
+    void handleKey(unsigned char keypress, unsigned char key = 0x00) {
+        DbgPrint("KEY:%d:%d\n", keypress, key);
     }
 
     void handlePowerState(unsigned char* buffer, int count){
@@ -55,8 +46,8 @@ class MyCEC: public CEC_Device {
         
     void OnReceive(int source, int dest, unsigned char* buffer, int count) {
       if (count == 0) return;
+      //Controllare se è monitor altrimetni intercettare solo i propri.
       
-      CEC_Device::OnReceive(source,dest,buffer,count);
       switch (buffer[0]) {
         
         case 0x36: DbgPrint("standby\n"); break;
@@ -78,10 +69,14 @@ class MyCEC: public CEC_Device {
         case 0x8D: if(buffer[1] == 0x02)
                       report(MenuActivated, source);
                    break;
-        //case 0x44: handleKey(buffer[1]); break;
-        //case 0x45: Keyboard.releaseAll(); break;
+        case 0x44: handleKey(buffer[0], buffer[1]); break;
+        case 0x45: handleKey(buffer[0]); break;
+
+        case 0x8A: handleKey(buffer[0], buffer[1]); break;
+        case 0x41: handleKey(buffer[0], buffer[1]); break;
+        case 0x42: handleKey(buffer[0], buffer[1]); break;
         
-        //default: CEC_Device::OnReceive(source,dest,buffer,count); break;
+        default: CEC_Device::OnReceive(source,dest,buffer,count); break;
       }
       
     }
@@ -101,7 +96,7 @@ void setup()
   pinMode(HPD_LINE,INPUT);
   
   Serial.begin(115200);
-//  Keyboard.begin();
+  //Keyboard.begin();
   
   //device.MonitorMode = true;
   //device.Promiscuous = true;
@@ -137,4 +132,3 @@ void loop()
   }
   device.Run();
 }
-
