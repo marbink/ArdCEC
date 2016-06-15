@@ -11,11 +11,13 @@ Tested with Arduino Uno and Samsung FX2490HD.
 - Implemented Menu Activated { 0x8E, 0x00 }
 - Implemented Power State handler to prevent problems with other devices using CEC.
 - Changed device type from CDT_PLAYBACK_DEVICE to CDT_RECORDING_DEVICE. [*This enables some more buttons on my Samsung TV; Anyway this seems to broke OSDName reading.*]
+- Created an Add-on to control Kodi Media Center (see below).
+
+## Kodi Add-On
+See here: https://github.com/marbink/ArdCEC-Kodi-Addon
 
 ## Todo
-
-- Fix OSDName. [*Actually it transmits SD:01:48:54:50:43 (S = Source, D = Destination), the problem is the opcode (0x01). It should be 0x47*]
-- Implement USB-Hid to connect Arduino via USB to HTPC. It would be wonderful if it would be recognized as a standard MCE Remote Controller. No software on HTPC would be required. high compatibility. **Or** create a plugin for Kodi, it should be easier and it should require less time.
+- Fix OSDName. [*Sometimes it transmits SD:01:48:54:50:43 (S = Source, D = Destination), the problem is the opcode (0x01). It should be 0x47*]
 - Implement something to pass data to Arduino from PC to set some variables. (Ex: OSDName)
 
 ## Schematic
